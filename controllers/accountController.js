@@ -21,7 +21,7 @@ const AccountController = {
                 const token = newAcc.generateAuthToken();
                 const newUser = new User({ account: newAcc._id, name: body.name });
                 newUser.save();
-                res.status(200).json({ newAcc, newUser, token });
+                res.status(200).json({ err: 'success' });
 
             });
 
@@ -39,15 +39,16 @@ const AccountController = {
                 const username = req.body.username;
                 const password = req.body.password;
                 const checkUserTonTai = await Account.findOne({ username });
-                if (!checkUserTonTai) return res.status(400).json({ err: 'loi khong tim thay tai khoan' });
+                if (!checkUserTonTai) return res.status(400).json('err');
                 const match = await bcrypt.compare(password, checkUserTonTai.password);
-                if (!match) return res.status(400).json({ err: 'mat khau khong chinh xac' })
+                if (!match) return res.status(400).json('err');
                 const token = checkUserTonTai.tokens[0];
                 if (!token) {
                     checkUserTonTai.generateAuthToken();
-                    return res.status(200).json(checkUserTonTai);
+                    // return res.status(200).json({ _id: checkUserTonTai._id, token: checkUserTonTai.tokens[0] });
                 }
-                res.status(200).json(checkUserTonTai);
+
+                res.status(200).json({ _id: checkUserTonTai._id, token: checkUserTonTai.tokens[0].token });
             } else {
                 const token = AuthHeader.split(" ")[1];
                 var decoded = jwt.verify(token, process.env.KEY);
