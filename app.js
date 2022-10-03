@@ -2,6 +2,7 @@ const express = require('express');
 const { default: mongoose } = require('mongoose');
 const morgan = require('morgan');
 const RouteAcc = require('./routes/accountRoute');
+const postRoute = require('./routes/postRoute');
 const RouteUser = require('./routes/userRoutes');
 require('dotenv').config();
 const app = new express();
@@ -15,6 +16,7 @@ mongoose.connect(process.env.URL, (err) => {
 
 app.use('/account', RouteAcc);
 app.use('/user',RouteUser);
+app.use('/post',postRoute);
 app.use('/a', () => {
     console.log('hii')
 });
