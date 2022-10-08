@@ -1,6 +1,6 @@
 
 const AccountController = require("../controllers/accountController");
-const RouteAcc = require("express").Router();
+const RouteAcc = require('express').Router();
 
 RouteAcc.post("/register", AccountController.accRegister);
 

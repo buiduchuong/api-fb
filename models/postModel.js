@@ -3,7 +3,7 @@ const { default: mongoose } = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
-const postChema = {
+const postChema = new Schema({
     user: {
         type: ObjectId,
         required: true
@@ -15,9 +15,12 @@ const postChema = {
     imageUrl: {
         type: String,
     },
-    likes: {
-        type: Number,
-    },
+    likes: [{
+        idUserLike: {
+            type: String,
+            required: true
+        }
+    }],
     comments: {
         type: Number
     },
@@ -26,7 +29,7 @@ const postChema = {
     }
 
 
-}
+})
 
 const Post = mongoose.model('Post', postChema);
 module.exports = Post;

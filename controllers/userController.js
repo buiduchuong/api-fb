@@ -24,6 +24,16 @@ const userController = {
 
         }
 
+    },
+    getOneUser: async (req, res) => {
+        const account = req.body.account;
+        try {
+            const data = await User.findOne({"account": account });
+            res.status(200).json(data);
+        } catch (error) {
+            res.status(500).json(error)
+
+        }
     }
 }
 
